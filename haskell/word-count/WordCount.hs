@@ -3,9 +3,10 @@ Copyright 2014 Bas Bossink (bas.bossink@gmail.com).
 -}
 module WordCount (wordCount) where
 
-import Data.Char (isLetter, toLower, isSpace, isPunctuation, isSymbol)
+import Data.Char (toLower, isSpace, isPunctuation, isSymbol)
 import Data.Map (Map, empty, adjust, insert, member)
 
+split :: String -> [String]
 split phrase = 
   case dropWhile toBeIgnored phrase of
     "" -> []
@@ -15,7 +16,8 @@ split phrase =
   where
   toBeIgnored = \char -> or [isSpace char, isPunctuation char, isSymbol char]
 
-tallyWords words = tallyWords' words empty
+tallyWords :: [String] -> Map String Integer
+tallyWords words' = tallyWords' words' empty
   where 
   tallyWords' (word:restOfWords) m = case member loweredWord m of
     True -> tallyWords' restOfWords $ adjust (1 +) loweredWord m 
