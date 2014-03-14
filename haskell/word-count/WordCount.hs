@@ -3,8 +3,8 @@ Copyright 2014 Bas Bossink (bas.bossink@gmail.com).
 -}
 module WordCount (wordCount) where
 
-import Data.Char (toLower, isSpace, isPunctuation, isSymbol)
-import Data.Map (Map, empty, adjust, insert, member)
+import Data.Char (isAlphaNum, toLower)
+import Data.Map (Map, empty, insertWith)
 
 split :: String -> [String]
 split phrase = 
@@ -14,17 +14,14 @@ split phrase =
       where 
       (letter, splitted) = break toBeIgnored letters
   where
-  toBeIgnored = \char -> or [isSpace char, isPunctuation char, isSymbol char]
+  toBeIgnored = not . isAlphaNum
 
 tallyWords :: [String] -> Map String Integer
-tallyWords words' = tallyWords' words' empty
+tallyWords words' = foldl tallyWord empty words' 
   where 
-  tallyWords' (word:restOfWords) m = case member loweredWord m of
-    True -> tallyWords' restOfWords $ adjust (1 +) loweredWord m 
-    False -> tallyWords' restOfWords $ insert loweredWord 1 m 
+  tallyWord m word = insertWith (+) loweredWord 1 m
     where
       loweredWord = map toLower word
-  tallyWords' [] m = m
     
 wordCount :: String -> Map String Integer
 wordCount = tallyWords . split
