@@ -11,10 +11,10 @@ import Data.Map (Map, empty, insertWith)
 tallyWords :: [String] -> Map String Integer
 tallyWords words' = foldl' tallyWord empty words' 
   where 
-  tallyWord m word = insertWith (+) (loweredWord word) 1 m
+  tallyWord m word = insertWith (+) loweredWord 1 m
     where
-      loweredWord = map toLower
+      loweredWord = map toLower word
     
 wordCount :: String -> Map String Integer
-wordCount = tallyWords . (wordsBy $ not . isAlphaNum)
+wordCount = tallyWords . wordsBy (not . isAlphaNum)
 
