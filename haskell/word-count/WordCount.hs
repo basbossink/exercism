@@ -4,25 +4,17 @@ Copyright 2014 Bas Bossink (bas.bossink@gmail.com).
 module WordCount (wordCount) where
 
 import Data.Char (isAlphaNum, toLower)
+import Data.Foldable (foldl')
+import Data.List.Split (wordsBy)
 import Data.Map (Map, empty, insertWith)
 
-split :: String -> [String]
-split phrase = 
-  case dropWhile toBeIgnored phrase of
-    "" -> []
-    letters -> letter : split splitted
-      where 
-      (letter, splitted) = break toBeIgnored letters
-  where
-  toBeIgnored = not . isAlphaNum
-
 tallyWords :: [String] -> Map String Integer
-tallyWords words' = foldl tallyWord empty words' 
+tallyWords words' = foldl' tallyWord empty words' 
   where 
-  tallyWord m word = insertWith (+) loweredWord 1 m
+  tallyWord m word = insertWith (+) (loweredWord word) 1 m
     where
-      loweredWord = map toLower word
+      loweredWord = map toLower
     
 wordCount :: String -> Map String Integer
-wordCount = tallyWords . split
+wordCount = tallyWords . (wordsBy $ not . isAlphaNum)
 
