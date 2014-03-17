@@ -6,10 +6,10 @@ module WordCount (wordCount) where
 import Data.Char (isAlphaNum, toLower)
 import Data.Foldable (foldl')
 import Data.List.Split (wordsBy)
-import Data.Map (Map, empty, insertWith)
+import Data.Map.Strict (Map, empty, insertWith)
 
 tallyWords :: [String] -> Map String Integer
-tallyWords words' = foldl' tallyWord empty words' 
+tallyWords = foldl' tallyWord empty 
   where 
   lowerWord = map toLower 
   tallyWord m word = insertWith (+) (lowerWord word) 1 m
