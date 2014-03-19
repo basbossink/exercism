@@ -6,13 +6,14 @@ module WordCount (wordCount) where
 import Data.Char (isAlphaNum, toLower)
 import Data.Foldable (foldl')
 import Data.List.Split (wordsBy)
-import Data.Map.Strict (Map, empty, insertWith)
+import Data.Map.Strict (Map, fromListWith)
 
 tallyWords :: [String] -> Map String Integer
-tallyWords = foldl' tallyWord empty 
-  where 
-  lowerWord = map toLower 
-  tallyWord m word = insertWith (+) (lowerWord word) 1 m
+tallyWords words = fromListWith (+) pairs
+  where
+  lowerWord = map toLower
+  loweredWords = map lowerWord words
+  pairs = zip loweredWords $ repeat 1
 
 wordCount :: String -> Map String Integer
 wordCount = tallyWords . wordsBy (not . isAlphaNum)
