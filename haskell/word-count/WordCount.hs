@@ -5,15 +5,17 @@ module WordCount (wordCount) where
 
 import Data.Char (isAlphaNum, toLower)
 import Data.Foldable (foldl')
-import Data.List.Split (wordsBy)
-import Data.Map.Strict (Map, fromListWith)
-
-tallyWords :: [String] -> Map String Integer
-tallyWords words = fromListWith (+) pairs
-  where
-  lowerWord = map toLower
-  loweredWords = map lowerWord words
-  pairs = zip loweredWords $ repeat 1
+import Data.Map.Strict (Map, empty, insertWith)
 
 wordCount :: String -> Map String Integer
-wordCount = tallyWords . wordsBy (not . isAlphaNum)
+wordCount = tallyWords . words . map normalize
+
+tallyWords :: [String] -> Map String Integer
+tallyWords = foldl' tallyWord empty 
+  where 
+  tallyWord accumulator word = insertWith (+) word 1 accumulator
+
+normalize :: Char -> Char
+normalize c 
+  | isAlphaNum c = toLower c
+  | otherwise = ' '
