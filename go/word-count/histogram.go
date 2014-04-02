@@ -33,7 +33,7 @@ func split(text string) []string {
 }
 
 func isProperWord(word string) bool {
-	return len(word) != 0
+	return len(word) > 0
 }
 
 func tallyWord(word string, result Histogram) {
