@@ -23,15 +23,9 @@ func normalize(text string) string {
 
 func split(text string) []string {
 	result := []string{}
-	words := strings.Split(text, " ")
+	words := strings.Fields(text)
 	for _, word := range words {
-		if isProperWord(word) {
-			result = append(result, word)
-		}
+		result = append(result, word)
 	}
 	return result
-}
-
-func isProperWord(word string) bool {
-	return len(word) > 0
 }
