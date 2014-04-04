@@ -4,73 +4,47 @@ import (
 	"strings"
 )
 
-func Detect(subject string, candidates []string) []string {
-	var returnValue []string
-	lowered := strings.ToLower(subject)
-	for _, candidate := range candidates {
-		addCandidateIfAnagram(lowered, candidate, &returnValue)
+type histogram map[rune]int
+type runeHistogramRepresentation struct {
+	word  string
+	runes *histogram
+}
+
+func newRuneHistogramRepresentation(word string) *runeHistogramRepresentation {
+	result := runeHistogramRepresentation{
+		strings.ToLower(word),
+		&histogram{},
 	}
-	return returnValue
-}
-
-func addCandidateIfAnagram(lowered, candidate string, accumulator *[]string) {
-	loweredCandidate := strings.ToLower(candidate)
-	if isPotentialAnagram(lowered, loweredCandidate) {
-		for _, permutation := range permutations(loweredCandidate) {
-			if lowered == permutation {
-				*accumulator = append(*accumulator, loweredCandidate)
-				break
-			}
-		}
+	for _, r := range result.word {
+		(*result.runes)[r]++
 	}
+	return &result
 }
 
-func isPotentialAnagram(lowered, loweredCandidate string) bool {
-	return len(loweredCandidate) == len(lowered) &&
-		loweredCandidate != lowered &&
-		haveSameCharacters(lowered, loweredCandidate)
-}
-
-func haveSameCharacters(first, second string) bool {
-	firstSet := createSetOfCharecters(first)
-	secondSet := createSetOfCharecters(second)
-	return includes(firstSet, secondSet) && includes(secondSet, firstSet)
-}
-
-func createSetOfCharecters(subject string) map[rune]bool {
-	result := make(map[rune]bool)
-	for _, char := range subject {
-		result[char] = true
-	}
-	return result
-}
-
-func includes(first, second map[rune]bool) bool {
-	for key, _ := range first {
-		if !second[key] {
+func (lhs *histogram) Equals(rhs *histogram) bool {
+	for r, count := range *lhs {
+		rhsCount, found := (*rhs)[r]
+		if !found || rhsCount != count {
 			return false
 		}
 	}
 	return true
 }
 
-func permutations(subject string) []string {
-	if len(subject) <= 1 {
-		return []string{subject}
-	}
-	perms := permutations(subject[1:])
-	char := subject[0]
-	result := []string{}
-	for _, perm := range perms {
-		result = append(result, intersperseCharacterAtEachIndex(perm, char)...)
-	}
-	return result
+func (lhs *runeHistogramRepresentation) isAnagramOf(rhs *runeHistogramRepresentation) bool {
+	return (*lhs).word != (*rhs).word &&
+		len((*lhs).word) == len((*rhs).word) &&
+		(*lhs).runes.Equals((*rhs).runes)
 }
 
-func intersperseCharacterAtEachIndex(perm string, char uint8) []string {
-	result := []string{}
-	for i := 0; i < (len(perm) + 1); i++ {
-		result = append(result, perm[:i]+string(char)+perm[i:])
+func Detect(subject string, candidates []string) []string {
+	var returnValue []string
+	lowered := newRuneHistogramRepresentation(subject)
+	for _, candidate := range candidates {
+		cand := newRuneHistogramRepresentation(candidate)
+		if lowered.isAnagramOf(cand) {
+			returnValue = append(returnValue, cand.word)
+		}
 	}
-	return result
+	return returnValue
 }
