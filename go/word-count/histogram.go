@@ -11,7 +11,7 @@ func WordCount(text string) Histogram {
 	normalized := normalize(text)
 	result := Histogram{}
 	for _, word := range split(normalized) {
-		tallyWord(word, result)
+		result[word]++
 	}
 	return result
 }
@@ -34,13 +34,4 @@ func split(text string) []string {
 
 func isProperWord(word string) bool {
 	return len(word) > 0
-}
-
-func tallyWord(word string, result Histogram) {
-	currentValue, containsKey := result[word]
-	if containsKey {
-		result[word] = currentValue + 1
-	} else {
-		result[word] = 1
-	}
 }
