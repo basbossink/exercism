@@ -1,11 +1,11 @@
 class Bob {
-  def hey(line: String): String = {
-    val letters = line.filter(_.isLetter)
-    if (line.filter(!_.isWhitespace).length == 0) {
+  def hey(poke: String): String = {
+    val letters = poke.filter(_.isLetter)
+    if (poke.filter(!_.isWhitespace).isEmpty) {
       "Fine. Be that way!"
-    } else if (letters.length > 0 && letters.forall(_.isUpper)) {
+    } else if (!letters.isEmpty && letters.forall(_.isUpper)) {
       "Woah, chill out!" 
-    } else if (line.last.equals('?') ) {
+    } else if (poke.last.equals('?') ) {
       "Sure." 
     } else {
       "Whatever."
