@@ -11,7 +11,6 @@ class NucleotideCountSpecs extends FlatSpec with Matchers {
   }
 
   "a repetitive sequence" should "count cytidine" in {
-    pending
     new DNA("CCCCC").count('C') should be (5)
   }
 
