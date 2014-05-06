@@ -7,11 +7,11 @@ class DNA(nucleotides: String) {
 
   require(validDnaNucleotide(nucleotides))
 
-  val nucleotideCounts = mutable.Map[Char, Int]() ++
+  val nucleotideCounts = mutable.Map[Char, Int]().withDefaultValue(0) ++
     (dnaNucleotides zip (dnaNucleotides map (c => nucleotides count (_ == c))))
 
   def count(nucleotide: Char) = {
     require(validDnaNucleotide(nucleotide.toString) || nucleotide == 'U')
-    nucleotideCounts.getOrElse(nucleotide, 0)
+    nucleotideCounts(nucleotide)
   }
 }
