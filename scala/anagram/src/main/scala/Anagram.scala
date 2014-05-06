@@ -5,6 +5,7 @@ class Anagram(word: String) {
     candidates.filter(
       candidate => {
         val loweredCandidate = candidate.toLowerCase
-        loweredWord != loweredCandidate && loweredWord.sorted == loweredCandidate.sorted
+        loweredWord != loweredCandidate &&
+          loweredWord.sorted == loweredCandidate.sorted
       })
 }
