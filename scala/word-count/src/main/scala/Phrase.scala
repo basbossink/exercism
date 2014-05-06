@@ -8,10 +8,9 @@ class Phrase(text: String) {
         split(' ').
         filter(c => !c.forall(_.isSpaceChar))
 
-    (mutable.Map[String, Int]() /: normalizedWords) {
+    (mutable.Map[String, Int]().withDefaultValue(0) /: normalizedWords) {
       (accumulator, word) => {
-        val oldCount = accumulator.getOrElse(word, 0)
-        accumulator += (word -> (oldCount + 1))
+        accumulator += (word -> (accumulator(word) + 1))
       }
     }
   }
