@@ -2,3 +2,4 @@
 *.h
 project/
 target/
+**/.idea/workspace.xml
