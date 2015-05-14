@@ -9,7 +9,11 @@ func min(lhs, rhs int) int {
 
 func Distance(first, second string) int {
   returnValue := 0
-  for i := 0; i < min(len(first),len(second)); i++ {
+  if(len(first) != len(second)) {
+    return -1
+  }
+  minLength := min(len(first),len(second))
+  for i := 0; i < minLength; i++ {
     if first[i] != second[i] {
       returnValue++
     }
