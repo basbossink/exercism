@@ -4,7 +4,7 @@
  */
 (function() {
   'use strict';
-  var Bob = function(){}
+  var Bob = function(){};
   module.exports = Bob;
   Bob.prototype.hey = function(what) {
     if (/^\s*$/.test(what)) {
