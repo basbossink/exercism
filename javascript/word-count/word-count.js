@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   var words = function (input) {
-    var split = input.split(/\s+/), counts = {}, word, i = 0,
+    var split = input.split(/\s+/), counts = {}, word, i,
       numberOfWords = split.length;
     for (i = 0; i < numberOfWords; i += 1) {
       word = split[i];
