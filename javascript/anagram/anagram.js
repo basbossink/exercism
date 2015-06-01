@@ -5,26 +5,27 @@
 (function () {
   'use strict';
   var anagram = function (word) {
-    var normalize = function (aWord) {
-      return aWord.toLowerCase().split('').sort().join('');
-    },
-      loweredWord = word.toLowerCase(),
-      sortedWord = normalize(word),
+    var loweredWord = word.toLowerCase(),
+      normalize = function (aWord) {
+        return aWord.toLowerCase().split('').sort().join('');
+      },
+      isFirstArgumentArray = function (argumentArray) {
+        return argumentArray.length === 1 &&
+          Array.isArray(argumentArray[0]);
+      },
+      normalizedWord = normalize(word),
+      isAnagram = function (possibleCandidate) {
+        return loweredWord !== possibleCandidate.toLowerCase() &&
+          normalizedWord === normalize(possibleCandidate);
+      },
       matches = function () {
-        var result = [], i, normalizedCandidate, candidate, candidates,
-          candidatesLength;
-        if (arguments.length === 1 && Array.isArray(arguments[0])) {
-          candidates = arguments[0];
-        } else {
-          candidates = arguments;
-        }
-        candidatesLength = candidates.length;
+        var i, result = [],
+          candidates = isFirstArgumentArray(arguments) ?  arguments[0] :
+              arguments,
+          candidatesLength = candidates.length;
         for (i = 0; i < candidatesLength; i += 1) {
-          candidate = candidates[i];
-          normalizedCandidate = normalize(candidate);
-          if (loweredWord !== candidate.toLowerCase() &&
-              sortedWord === normalizedCandidate) {
-            result.push(candidate);
+          if (isAnagram(candidates[i])) {
+            result.push(candidates[i]);
           }
         }
         return result;

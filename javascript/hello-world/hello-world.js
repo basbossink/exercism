@@ -4,11 +4,12 @@
  */
 (function () {
   'use strict';
-  var HelloWorld = function () {
-    this.hello = function (name) {
+  var helloWorld = function () {
+    var hello = function (name) {
       name = name || "world";
       return "Hello, " + name + "!";
     };
+    return { hello: hello };
   };
-  module.exports = HelloWorld;
+  module.exports = helloWorld;
 }());

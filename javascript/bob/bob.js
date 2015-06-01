@@ -4,8 +4,8 @@
  */
 (function () {
   'use strict';
-  var Bob = function () {
-    this.hey = function (what) {
+  var bob = function () {
+    var hey = function (what) {
       if (/^\s*$/.test(what)) {
         return "Fine. Be that way!";
       }
@@ -17,6 +17,7 @@
       }
       return "Whatever.";
     };
+    return { hey: hey };
   };
-  module.exports = Bob;
+  module.exports = bob;
 }());
