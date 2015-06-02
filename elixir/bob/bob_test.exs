@@ -8,14 +8,14 @@ ExUnit.start
 
 defmodule TeenagerTest do
   use ExUnit.Case, async: true
-  doctest Teenager
+  #  doctest Teenager
 
   test "stating something" do
     assert Teenager.hey("Tom-ay-to, tom-aaaah-to.") == "Whatever."
   end
 
   test "shouting" do
-    # assert Teenager.hey("WATCH OUT!") == "Woah, chill out!"
+    assert Teenager.hey("WATCH OUT!") == "Woah, chill out!"
   end
 
   test "asking a question" do
