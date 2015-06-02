@@ -2,15 +2,15 @@ package etl
 
 import "strings"
 
-type legacy map[int][]string
-type newSystem map[string]int
+type Legacy map[int][]string
+type NewSystem map[string]int
 
-func Transform(oldValue legacy) newSystem {
-  returnValue := make(newSystem)
-  for key, characters := range oldValue {
-    for _,char := range characters {
-      returnValue[strings.ToLower(char)] = key
-    }
-  }
-  return returnValue
+func Transform(oldValue Legacy) NewSystem {
+	returnValue := make(NewSystem)
+	for key, characters := range oldValue {
+		for _, char := range characters {
+			returnValue[strings.ToLower(char)] = key
+		}
+	}
+	return returnValue
 }

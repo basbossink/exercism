@@ -1,10 +1,10 @@
 package hamming
 
 func min(lhs, rhs int) int {
-  if lhs <= rhs {
-    return lhs
-  }
-  return rhs
+	if lhs <= rhs {
+		return lhs
+	}
+	return rhs
 }
 
 func Distance(first, second string) int {

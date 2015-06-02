@@ -1,2 +1,5 @@
 *.o
-*.hi
+*.h
+project/
+target/
+**/.idea/workspace.xml
