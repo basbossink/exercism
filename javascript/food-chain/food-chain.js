@@ -50,7 +50,8 @@
         "She swallowed the spider to catch the fly.\n" +
         "I don't know why she swallowed the fly. " +
         "Perhaps she'll die.\n",
-      "I know an old lady who swallowed a horse.\n" + "She's dead, of course!\n"
+      "I know an old lady who swallowed a horse.\n" +
+        "She's dead, of course!\n"
     ],
     verse = function (index) {
       return song[index - 1];
