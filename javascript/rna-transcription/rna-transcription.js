@@ -5,14 +5,10 @@
 (function () {
   'use strict';
   var toRna = function (strand) {
-    var dnaToRna = {'G': 'C', 'C': 'G', 'T': 'A', 'A': 'U' },
-      strandLength = strand.length,
-      i,
-      result = '';
-    for (i = 0; i < strandLength; i += 1) {
-      result += dnaToRna[strand.charAt(i)];
-    }
-    return result;
+    var dnaToRna = {'G': 'C', 'C': 'G', 'T': 'A', 'A': 'U' };
+    return strand.split('').reduce(function (prev, curr) {
+      return prev + dnaToRna[curr];
+    }, '');
   };
   module.exports = toRna;
 }());
