@@ -2,49 +2,28 @@ package anagram
 
 import (
 	"strings"
+    "sort"
 )
-
-type histogram map[rune]int
-type runeHistogramRepresentation struct {
-	word  string
-	runes *histogram
-}
 
 func Detect(subject string, candidates []string) []string {
 	var returnValue []string
-	lowered := newRuneHistogramRepresentation(subject)
 	for _, candidate := range candidates {
-		cand := newRuneHistogramRepresentation(candidate)
-		if lowered.isAnagramOf(cand) {
-			returnValue = append(returnValue, cand.word)
+		if isAnagramOf(subject, candidate) {
+			returnValue = append(returnValue, strings.ToLower(candidate))
 		}
 	}
 	return returnValue
 }
 
-func newRuneHistogramRepresentation(word string) *runeHistogramRepresentation {
-	result := runeHistogramRepresentation{
-		strings.ToLower(word),
-		&histogram{},
-	}
-	for _, r := range result.word {
-		(*result.runes)[r]++
-	}
-	return &result
+func isAnagramOf(lhs string, rhs string) bool {
+    loweredLhs := strings.ToLower(lhs)
+    loweredRhs := strings.ToLower(rhs)
+    return loweredLhs != loweredRhs && 
+        sortString(loweredLhs) == sortString(loweredRhs)
 }
 
-func (lhs *runeHistogramRepresentation) isAnagramOf(rhs *runeHistogramRepresentation) bool {
-	return (*lhs).word != (*rhs).word &&
-		len((*lhs).word) == len((*rhs).word) &&
-		(*lhs).runes.Equals((*rhs).runes)
-}
-
-func (lhs *histogram) Equals(rhs *histogram) bool {
-	for r, count := range *lhs {
-		rhsCount, found := (*rhs)[r]
-		if !found || rhsCount != count {
-			return false
-		}
-	}
-	return true
+func sortString(anyString string) string {
+    s := strings.Split(anyString, "")
+    sort.Strings(s)
+    return strings.Join(s, "")
 }
