@@ -9,9 +9,9 @@
     strand = strand || '';
 
     var count = function (nucleotide) {
-      return strand.split('').reduce(function (prev, curr) {
-        return prev + (curr === nucleotide ? 1 : 0);
-      }, 0);
+      return strand.split('').filter(function (element) {
+        return element === nucleotide;
+      }).length;
     },
 
       histogram = function () {
