@@ -6,9 +6,9 @@
   'use strict';
   var toRna = function (strand) {
     var dnaToRna = {'G': 'C', 'C': 'G', 'T': 'A', 'A': 'U' };
-    return strand.split('').reduce(function (prev, curr) {
-      return prev + dnaToRna[curr];
-    }, '');
+    return strand.split('').map(function (item) {
+      return dnaToRna[item];
+    }).join('');
   };
   module.exports = toRna;
 }());
