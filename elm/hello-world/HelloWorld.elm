@@ -3,9 +3,13 @@ module HelloWorld exposing (..)
 
 helloWorld : Maybe String -> String
 helloWorld name =
-    case name of
+  let
+    name' =
+      case name of
         Nothing ->
-            "Hello, World!"
+          "World"
 
-        Just name' ->
-            "Hello, " ++ name' ++ "!"
+        Just name'' ->
+          name''
+  in
+    "Hello, " ++ name' ++ "!"
